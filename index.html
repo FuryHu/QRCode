@@ -4,19 +4,23 @@
 <script type="text/javascript" src="./js/qrcode.js"></script>
 </head>
 <body>
-<center>
+<div style="display: flex;width:500px;margin:auto;">
+<input type="color" id="bgColor" style="height: 46px;padding: 0;border: none"/>
 <input id="text" type="text" value="要热爱生活
-" style="width:500px;height: 40px;font-size: 20px" /><br />
-<div id="qrcode" style="width:100px; height:100px; margin-top:15px;"></div>
-</center>
+" style="width:452px;height: 40px;font-size: 20px" />
+</div>
+<br />
+<div id="qrcode" style="margin-top:15px;width:500px;margin:auto"></div>
 <script type="text/javascript">
 var qrcode = new QRCode(document.getElementById("qrcode"), {
-width : 500,
-height : 500,
+width: 500,
+height: 500,
 correctLevel : QRCode.CorrectLevel.L
 });
 
 function makeCode () {    
+
+qrcode._htOption.colorDark = document.getElementById("bgColor").value
 var elText = document.getElementById("text");
 
 if (!elText.value) {
@@ -39,6 +43,14 @@ if (e.keyCode == 13) {
 makeCode();
 }
 });
+document.getElementById("bgColor").onchange = function() {
+makeCode();
+}
 </script>
+<style type="text/css">
+input[type="color" i]::-webkit-color-swatch-wrapper {
+padding: 0
+}
+</style>
 </body>
 </html>
