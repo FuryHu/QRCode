@@ -4,14 +4,16 @@
 <script type="text/javascript" src="./js/qrcode.js"></script>
 </head>
 <body>
+<center>
 <input id="text" type="text" value="要热爱生活
 " style="width:500px;height: 40px;font-size: 20px" /><br />
 <div id="qrcode" style="width:100px; height:100px; margin-top:15px;"></div>
-
+</center>
 <script type="text/javascript">
 var qrcode = new QRCode(document.getElementById("qrcode"), {
 width : 500,
-height : 500
+height : 500,
+correctLevel : QRCode.CorrectLevel.L
 });
 
 function makeCode () {    
