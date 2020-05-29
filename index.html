@@ -11,6 +11,17 @@
 </div>
 <br />
 <div id="qrcode" style="margin-top:15px;width:500px;margin:auto"></div>
+<br />
+<div style="display: flex;width:500px;margin:auto;">
+<div>
+	<textarea id="ribaoText" style="width:500px;height: 400px;font-size: 20px" placeholder="日报内容粘贴进来"></textarea>
+</div>
+<div>
+<input id="suffix" style="width:200px;height: 50px;margin-left:10px;font-size:20px" placeholder="索引后缀" value="、"></input>
+<button id="removeIndex" style="width:200px;height: 50px;margin-left:10px;margin-top:10px;" type="button">去除索引</button>
+<button id="addIndex" style="width:200px;height: 50px;margin-left:10px;margin-top:10px;" type="button">添加索引</button>
+</div>
+</div>
 <script type="text/javascript">
 var qrcode = new QRCode(document.getElementById("qrcode"), {
 width: 500,
@@ -32,19 +43,47 @@ return;
 qrcode.makeCode(elText.value);
 }
 
-makeCode();
+function initRibao () {
+	let removeIndex = document.getElementById('removeIndex')
+	let addIndex = document.getElementById('addIndex')
+	let ribaoText = document.getElementById('ribaoText')
+	let suffix = document.getElementById('suffix')
+	
+	removeIndex.onclick = () => {
+		let str = ribaoText.value
+		let suffixStr = suffix.value
+		const reg = new RegExp(`.*?\\` + suffixStr, 'g')
+		console.log(reg)
+		console.log(str.replace(reg, ''))
+		ribaoText.value = str.replace(reg, '')
+	}
+	addIndex.onclick = () => {
+		let str = ribaoText.value
+		let suffixStr = suffix.value
+		ribaoArr = str.split(/[(\r\n)\r\n]+/)
+		console.log(ribaoArr)
+		ribaoText.value = ''
+		ribaoArr.forEach((i, index) => {
+			// i = index + suffixStr + i
+			ribaoText.value += (index + 1 )+ suffixStr + i
+		})
+	}
+}
+
+makeCode()
+initRibao()
 
 $("#text").
 on("blur", function () {
-makeCode();
+makeCode()
 }).
 on("keydown", function (e) {
 if (e.keyCode == 13) {
-makeCode();
+makeCode()
 }
-});
+})
 document.getElementById("bgColor").onchange = function() {
-makeCode();
+makeCode()
 }
 </script>
 <style type="text/css">
